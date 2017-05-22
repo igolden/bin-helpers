@@ -1,0 +1,54 @@
+#!/usr/bin/env bash
+
+DOCKER=$(which docker)
+
+function preflight {
+  preflight_header
+  preflight_src
+  preflight_manifest
+  preflight_docker
+  # localhost port check
+  # dotenv check
+  # docker running? check
+}
+
+function preflight_header {
+  echo ""
+  green "-----------------------    PREFLIGHT CHECKS    -------------------------" 
+  echo ""
+}
+
+function preflight_src {
+  if [ -e $SRC_DIR ]; then
+    check_fail "SRC DIR EXISTS" 
+    yes_no "Directory 'src/' already exists. Do you want to remove?" remove_src_dir  
+  else
+    echo ""
+    check_pass 'SRC_DIR DOES NOT EXISTS, pass.'
+  fi
+
+}
+
+function preflight_manifest {
+  if [ -e $MANIFEST ]; then
+    check_pass 'MANIFEST EXISTS, pass.'
+  else
+    check_fail "NO MANIFEST FILE EXISTS." 
+    exit
+  fi
+}
+
+function remove_src_dir {
+  rm -rf src
+  check_pass 'SRC_DIR removed and does not exist, pass.'
+}
+
+
+function preflight_docker {
+  if [ -z $DOCKER ]; then
+    check_fail "DOCKER NOT INSTALLED. INSTALL DOCKER OR IGNORE." 
+    yes_no "Do you want to ignore this? (NOTE: other scripts may fail.)" exit 'Ignoring..'
+  else 
+    check_pass 'DOCKER IS INSTALLED, pass.'
+  fi
+}

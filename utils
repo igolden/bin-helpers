@@ -1,0 +1,88 @@
+#!/usr/bin/env bash
+
+
+function grey {
+  echo -e "\033[1;30m$1\033\\"
+}
+function red {
+  echo -e "\033[1;31m$1\033\\"
+}
+function green {
+  echo -e "\033[1;32m$1\033\\"
+}
+function yellow {
+  echo -e "\033[1;33m$1\033\\"
+}
+function blue {
+  echo -e "\033[1;34m$1\033\\"
+}
+function purple {
+  echo -e "\033[1;35m$1\033\\"
+}
+function cyan {
+  echo -e "\033[1;36m$1\037"
+}
+function white {
+  echo -e "\033[1;37m$1\037"
+}
+
+# Output functions
+function dialog {
+  echo -e ""
+  yellow " ---------------------------------------------------------------------"
+  yellow "|  $1"
+  yellow " ---------------------------------------------------------------------"
+  echo -e ""
+}
+
+function warning {
+  echo -e ""
+  red " *******************************************"
+  red "|  $1" 
+  red " *******************************************"
+  echo -e ""
+}
+
+function success {
+  echo -e ""
+  green " ---------------------------------------------------------------------"
+  green "|  $1"
+  green " ---------------------------------------------------------------------"
+  echo -e ""
+}
+function check_pass {
+  green "✓  $1"
+}
+function check_fail {
+  red "✘  $1"
+}
+function working {
+  echo ""
+  yellow "⌛  $1"
+}
+
+function yes_no {
+  white ""
+  while true; do
+    read -p "$1 (Y/n)" yn
+    case $yn in
+      [Yy]* ) $2; break;;
+      [Nn]* ) exit;;
+      * ) echo "Please use Y/y/yes/Yes or N/n/no/No";;
+    esac
+  done
+}
+function utils {
+  echo "Colors:"
+  grey "grey: =============="
+  red "red: =============="
+  green "green: =============="
+  yellow "yellow: =============="
+  blue "blue: =============="
+  purple "purple: =============="
+  cyan "cyan: =============="
+  white "white: =============="
+  dialog "Dialog"
+  warning "Warning"
+  success "success"
+}
